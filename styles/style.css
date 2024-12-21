@@ -1,0 +1,110 @@
+/* General Reset */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+h1 {
+    text-align: center;
+    color: #555;
+}
+
+.add-task-form {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.add-task-form input[type="text"],
+.add-task-form input[type="date"] {
+    width: 70%;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.add-task-form button {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-task-form button:hover {
+    background-color: #218838;
+}
+
+.task-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.task-list th,
+.task-list td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.task-list th {
+    background-color: #f8f9fa;
+}
+
+.task-list tr:hover {
+    background-color: #f1f1f1;
+}
+
+.edit {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.edit:hover {
+    text-decoration: underline;
+}
+
+.delete {
+    color: #dc3545;
+    text-decoration: none;
+}
+
+.delete:hover {
+    text-decoration: underline;
+}
+
+.logout-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.logout-button:hover {
+    background-color: #ff3333;
+}
+
+
+
