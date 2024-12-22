@@ -30,9 +30,18 @@
             <p class="redirect">Already have an account? <a href="login.php">Login here</a></p>
         </form>
         <?php
-            if(isset($_GET["err"]) && $_GET["err"] == 1){
-                echo "<p style='color:red; text-align:center; margin-top:10px;'>All fields are required</p>";
+            if(isset($_GET["err"])){
+                if($_GET["err"]==1){
+                    echo "<p style='color:red; text-align:center; margin-top:10px;'>All fields are required</p>";
+                }
+                if($_GET["err"]==2){
+                    echo "<p style='color:red; text-align:center; margin-top:10px;'>Password do not match</p>";
+                }
+                if($_GET["err"]==3){
+                    echo "<p style='color:red; text-align:center; margin-top:10px;'>Email already exists</p>";
+                }
             }
+            
         ?>
     </div>
 </body>
