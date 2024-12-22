@@ -7,6 +7,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     //check if inputs are valid
     if( empty($email) || empty($password) ){
         header("Location: ../login.php?err=1");
+        exit();
     }
     //login the user
     $sql= "SELECT id,username,email, password FROM users WHERE email =:email";

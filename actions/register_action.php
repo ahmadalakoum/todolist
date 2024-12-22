@@ -9,6 +9,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     //check if inputs are valid
     if(empty($username) || empty($email) || empty($password) || empty($confirmPassword)){
         header("Location: ../register.php?err=1");
+        exit();
     }
         // Check if passwords match
         if ($password !== $confirmPassword) {

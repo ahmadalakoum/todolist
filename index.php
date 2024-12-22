@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $due_date = $_POST["due_date"];
 
     if (empty($task_title) || empty($task_description)) {
-        echo "All fields are required.";
+        header("Location: ./index.php?err=5");
         exit();
     }
 
@@ -65,6 +65,14 @@ try {
             <input type="date" name="due_date" required>
             <button type="submit">Add Task</button>
         </form>
+
+        <?php
+            if(isset($_GET["err"])){
+                if($_GET["err"]==5){
+                    echo "<p style='color:red; text-align:center; margin-top:10px;'>Please enter the task title and description</p>";
+                }
+        }
+        ?>
 
         <!-- Task List -->
         <div class="task-list">
