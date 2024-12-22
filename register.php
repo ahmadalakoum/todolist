@@ -38,7 +38,7 @@
                     echo "<p style='color:red; text-align:center; margin-top:10px;'>Password do not match</p>";
                 }
                 if($_GET["err"]==3){
-                    echo "<p style='color:red; text-align:center; margin-top:10px;'>Email already exists</p>";
+                    echo "<p style='color:red; text-align:center; margin-top:10px;'>Email or Username already exists</p>";
                 }
             }
             
