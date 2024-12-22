@@ -66,8 +66,10 @@ try {
 </head>
 <body>
     <div class="container">
+
         <h1><?php echo "Welcome to  " .  $_SESSION["username"] . " todo list"; ?></h1>
         <a href="logout.php" class="logout-button">Logout</a>
+
         
 
         <!-- Add Task Form -->
@@ -105,7 +107,6 @@ try {
                         <th>Title</th>
                         <th>Description</th>
                         <th>Due Date</th>
-                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -118,7 +119,6 @@ try {
                             <td><?php echo $task['title'];?></td>
                             <td><?php echo $task['description'];?></td>
                             <td><?php echo $task['due_date'];?></td>
-                            <td><?php echo $task['status'] ?></td>
                             <td>
                                 
                                 <a href="delete_task.php?id=<?php echo $task['id'];?>" class="delete">❌</a>
@@ -132,7 +132,10 @@ try {
                 </tbody>
             </table>
         </div>
-       
+        <div class="changeContainer">
+            <a href="changeInformation.php">Change personal information</a>
+        </div>
+        
     </div>
 </body>
 </html>

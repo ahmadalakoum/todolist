@@ -26,6 +26,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             session_start();
             $_SESSION["user_id"]=$user['id'];
             $_SESSION["username"]=$user["username"];
+            $_SESSION["email"]=$user["email"];
             $_SESSION["isLoggedIn"]=true;
             //redirect to home page
             header("Location:../index.php");
