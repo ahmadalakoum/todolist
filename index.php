@@ -33,10 +33,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 // Fetch tasks from the database
+// Fetch tasks based on the selected status
+$status_filter = isset($_GET['status']) ? $_GET['status'] : 'all';
+
 $tasks = [];
 try {
-    $stmt = $pdo->prepare("SELECT * FROM tasks WHERE user_id = :user_id ORDER BY due_date ASC");
+    if ($status_filter === 'all') {
+        $sql = "SELECT * FROM tasks WHERE user_id = :user_id ORDER BY due_date ASC";
+    } else {
+        $sql = "SELECT * FROM tasks WHERE user_id = :user_id AND status = :status ORDER BY due_date ASC";
+    }
+
+    $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+    if ($status_filter !== 'all') {
+        $stmt->bindParam(':status', $status_filter, PDO::PARAM_STR);
+    }
     $stmt->execute();
     $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -74,6 +86,16 @@ try {
         }
         ?>
 
+        <!-- Task Filter -->
+        <form method="GET" action="index.php" class="filter-form">
+            <label for="status">Filter by status:</label>
+            <select name="status" id="status" onchange="this.form.submit()">
+                <option value="all" <?php echo $status_filter === 'all' ? 'selected' : ''; ?>>All</option>
+                <option value="pending" <?php echo $status_filter === 'pending' ? 'selected' : ''; ?>>Pending</option>
+                <option value="completed" <?php echo $status_filter === 'completed' ? 'selected' : ''; ?>>Completed</option>
+            </select>
+        </form>
+
         <!-- Task List -->
         <div class="task-list">
             <table>
@@ -90,6 +112,7 @@ try {
                 <tbody>
                     <!-- Dynamically display tasks from the database -->
                      <?php foreach ($tasks as $i => $task) {?>
+
                         <tr>
                             <td><?php echo ++$i;?></td>
                             <td><?php echo $task['title'];?></td>
@@ -97,10 +120,11 @@ try {
                             <td><?php echo $task['due_date'];?></td>
                             <td><?php echo $task['status'] ?></td>
                             <td>
-                                <a href="edit_task.php?id=<?php echo $task['id'];?>" class="edit">Edit</a>
-                                <a href="delete_task.php?id=<?php echo $task['id'];?>" class="delete">Delete</a>
+                                
+                                <a href="delete_task.php?id=<?php echo $task['id'];?>" class="delete">❌</a>
                                 <?php if ($task['status'] === 'pending') {?>
-                                    <a href="complete_task.php?id=<?php echo $task['id'];?>" class="complete">Complete</a>
+                                    <a href="edit_task.php?id=<?php echo $task['id'];?>" class="edit">✏️</a>
+                                    <a href="complete_task.php?id=<?php echo $task['id'];?>" class="complete">✅</a>
                                 <?php }?>
                             </td>
                         </tr>
