@@ -15,7 +15,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     if(!$user){
-        echo "Invalid email or password";
+        header("Location: ../login.php?err=4");
         exit();
     }
 

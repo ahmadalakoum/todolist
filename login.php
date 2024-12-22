@@ -22,9 +22,14 @@
             <p class="redirect">Don't have an account? <a href="register.php">Register here</a></p>
         </form>
         <?php
-            if(isset($_GET["err"]) && $_GET["err"] == 1){
-                echo "<p style='color:red; text-align:center; margin-top:10px;'>All fields are required</p>";
+            if(isset($_GET["err"])){
+                if($_GET["err"]==1){
+                    echo "<p style='color:red; text-align:center; margin-top:10px;'>All fields are required</p>";
+                }
+                if($_GET["err"]==4){
+                    echo "<p style='color:red; text-align:center; margin-top:10px;'>Wrong credentials</p>";
             }
+        }
         ?>
     </div>
 </body>
