@@ -19,7 +19,7 @@ if (isset($_GET['id'])) {
         $task = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$task) {
-            echo "Task not found or you do not have permission to edit it.";
+            header("Location: error.php?err=6");
             exit();
         }
     } catch (PDOException $e) {
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $due_date = $_POST["due_date"];
 
     if (empty($task_title) || empty($task_description)) {
-        echo "All fields are required.";
+        header("Location: edit_task.php?err=5");
         exit();
     }
 
@@ -76,6 +76,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <input type="date" name="due_date" value="<?php echo htmlspecialchars($task['due_date']); ?>" required>
             <button type="submit">Update Task</button>
         </form>
+        
+        <?php
+            if(isset($_GET["err"])){
+                if($_GET["err"]==5){
+                    echo "<p style='color:red; text-align:center; margin-top:10px;'>Please enter the task title and description</p>";
+                }
+        }
+        ?>
         <a href="index.php">Cancel</a>
     </div>
 </body>
