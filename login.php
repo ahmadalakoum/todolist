@@ -21,6 +21,11 @@
             <button type="submit">Login</button>
             <p class="redirect">Don't have an account? <a href="register.php">Register here</a></p>
         </form>
+        <?php
+            if(isset($_GET["err"]) && $_GET["err"] == 1){
+                echo "<p style='color:red; text-align:center; margin-top:10px;'>All fields are required</p>";
+            }
+        ?>
     </div>
 </body>
 </html>
