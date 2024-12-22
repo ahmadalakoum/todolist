@@ -1,15 +1,14 @@
 <?php
 require "../connection.php";
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $username= $_POST["username"];
-    $email= $_POST["email"];
-    $password= $_POST["password"];
-    $confirmPassword=$_POST["confirm_password"];
+    $username= trim($_POST["username"]);
+    $email= trim($_POST["email"]);
+    $password= trim($_POST["password"]);
+    $confirmPassword=trim($_POST["confirm_password"]);
     
     //check if inputs are valid
-    if(empty(trim($username)) || empty(trim($email)) || empty(trim($password)) || empty(trim($confirmPassword))){
-        echo "All fields are required";
-        exit();
+    if(empty($username) || empty($email) || empty($password) || empty($confirmPassword)){
+        header("Location: ../register.php?err=1");
     }
     // register a new user 
     $hashedPassword= password_hash($password,PASSWORD_BCRYPT);
