@@ -9,8 +9,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         header("Location: ../login.php?err=1");
         exit();
     }
+    
+
     //login the user
-    $sql= "SELECT id,username,email, password FROM users WHERE email =:email";
+    $sql= "SELECT id,username,email, password,role FROM users WHERE email =:email";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':email', $email);
     $stmt->execute();
@@ -28,6 +30,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $_SESSION["username"]=$user["username"];
             $_SESSION["email"]=$user["email"];
             $_SESSION["isLoggedIn"]=true;
+            $_SESSION["role"]=$user["role"];
+            if($_SESSION["role"]=="admin"){
+                header("Location:../admin.php");
+                exit();
+            }
             //redirect to home page
             header("Location:../index.php");
 
