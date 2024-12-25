@@ -33,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 // Fetch tasks from the database
-// Fetch tasks based on the selected status
 $status_filter = isset($_GET['status']) ? $_GET['status'] : 'all';
 
 $tasks = [];
@@ -54,6 +53,13 @@ try {
 } catch (PDOException $e) {
     echo "Error fetching tasks: " . $e->getMessage();
 }
+
+// Fetch user details including profile picture
+$sql = "SELECT username, profile_picture FROM users WHERE id = :user_id";
+$stmt = $pdo->prepare($sql);
+$stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+$stmt->execute();
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -67,9 +73,32 @@ try {
 <body>
     <div class="container">
 
-        <h1><?php echo "Welcome to  " .  $_SESSION["username"] . " todo list"; ?></h1>
-        <a href="logout.php" class="logout-button">Logout</a>
-
+        <!-- Navbar -->
+        <nav style=" display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 10px;
+                        margin-bottom:20px;
+                        background-color: #4CAF50;
+                        color: white;">
+    <div>
+        <h1 style="font-size: 24px; color: white; margin: 0;">My Todo List</h1>
+    </div>
+    <div style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: center; margin-right: 20px;">
+            <?php if ($user['profile_picture']): ?>
+                <img src="uploads/<?php echo $user['profile_picture']; ?>" alt="Profile Picture" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 10px; object-fit: cover; border: 2px solid #ddd; transition: transform 0.3s ease-in-out;">
+            <?php else: ?>
+                <img src="uploads/default-profile.png" alt="Default Profile Picture" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 10px; object-fit: cover; border: 2px solid #ddd; transition: transform 0.3s ease-in-out;">
+            <?php endif; ?>
+            <span style="font-weight: bold; font-size: 16px;"><?php echo $_SESSION["username"]; ?></span>
+        </div>
+        <div style="display: flex; flex-direction: row; align-items:center; justify-content:center; gap:5px;">
+            <a href="changeInformation.php" style="margin-top: 10px; padding: 10px 15px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; font-size: 14px;">Change personal information</a>
+            <a href="logout.php" style="margin-top: 10px; padding: 10px 15px; background-color: #ff4d4d; color: white; text-decoration: none; border-radius: 5px; font-size: 14px;">Logout</a>
+        </div>
+    </div>
+</nav>
         
 
         <!-- Add Task Form -->
@@ -81,11 +110,11 @@ try {
         </form>
 
         <?php
-            if(isset($_GET["err"])){
-                if($_GET["err"]==5){
+            if (isset($_GET["err"])) {
+                if ($_GET["err"] == 5) {
                     echo "<p style='color:red; text-align:center; margin-top:10px;'>Please enter the task title and description</p>";
                 }
-        }
+            }
         ?>
 
         <!-- Task Filter -->
@@ -112,30 +141,26 @@ try {
                 </thead>
                 <tbody>
                     <!-- Dynamically display tasks from the database -->
-                     <?php foreach ($tasks as $i => $task) {?>
-
+                    <?php foreach ($tasks as $i => $task) { ?>
                         <tr>
-                            <td><?php echo ++$i;?></td>
-                            <td><?php echo $task['title'];?></td>
-                            <td><?php echo $task['description'];?></td>
-                            <td><?php echo $task['due_date'];?></td>
+                            <td><?php echo ++$i; ?></td>
+                            <td><?php echo $task['title']; ?></td>
+                            <td><?php echo $task['description']; ?></td>
+                            <td><?php echo $task['due_date']; ?></td>
                             <td>
-                                
-                                <a href="delete_task.php?id=<?php echo $task['id'];?>" class="delete">❌</a>
-                                <?php if ($task['status'] === 'pending') {?>
-                                    <a href="edit_task.php?id=<?php echo $task['id'];?>" class="edit">✏️</a>
-                                    <a href="complete_task.php?id=<?php echo $task['id'];?>" class="complete">✅</a>
-                                <?php }?>
+                                <a href="delete_task.php?id=<?php echo $task['id']; ?>" class="delete">❌</a>
+                                <?php if ($task['status'] === 'pending') { ?>
+                                    <a href="edit_task.php?id=<?php echo $task['id']; ?>" class="edit">✏️</a>
+                                    <a href="complete_task.php?id=<?php echo $task['id']; ?>" class="complete">✅</a>
+                                <?php } ?>
                             </td>
                         </tr>
-                    <?php }?>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>
-        <div class="changeContainer">
-            <a href="changeInformation.php">Change personal information</a>
-        </div>
-        
+
+
     </div>
 </body>
 </html>

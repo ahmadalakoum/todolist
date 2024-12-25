@@ -38,6 +38,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             //redirect to home page
             header("Location:../index.php");
 
+        }else{
+            header("Location:../login.php?err=4");
+            exit();
         }
     }
 }

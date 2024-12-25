@@ -6,6 +6,7 @@ body {
     background-color: #f4f4f4;
     color: #333;
 }
+
 .container {
     width: 80%;
     margin: 20px auto;
@@ -15,11 +16,7 @@ body {
     border-radius: 5px;
 }
 
-h1 {
-    text-align: center;
-    color: #555;
-}
-
+/* Add Task Form */
 .add-task-form {
     display: flex;
     justify-content: space-between;
@@ -48,6 +45,7 @@ h1 {
     background-color: #218838;
 }
 
+/* Task List */
 .task-list table {
     width: 100%;
     border-collapse: collapse;
@@ -69,6 +67,7 @@ h1 {
     background-color: #f1f1f1;
 }
 
+/* Edit and Delete Links */
 .edit {
     color: #007bff;
     text-decoration: none;
@@ -86,25 +85,4 @@ h1 {
 .delete:hover {
     text-decoration: underline;
 }
-
-.logout-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 14px;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.logout-button:hover {
-    background-color: #ff3333;
-}
-
-
-
-
+/*  */
